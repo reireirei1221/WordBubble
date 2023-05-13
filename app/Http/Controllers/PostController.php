@@ -35,10 +35,10 @@ class PostController extends Controller
     {
         $input = $request['post'];
         //dd($post->count);
-        $data = [
-            'count' => $post->count + 1, // 更新または追加するデータ
-            // 他のデータも追加する場合は、連想配列に追加する
-        ];
+        // $data = [
+        //     'count' => $post->count + 1, // 更新または追加するデータ
+        //     // 他のデータも追加する場合は、連想配列に追加する
+        // ];
         
         //$post = Post::updateOrCreate(['name' => $input['name']], $data);
          // 更新または追加するデータを指定した条件で取得する
@@ -47,14 +47,13 @@ class PostController extends Controller
         if ($existingPost) {
             // データが存在する場合はcountを1インクリメントする
             $existingPost->count += 1;
-            
+            $existingPost->save();
+            return redirect('/posts/' . $existingPost->id);
         } else {
             // データが存在しない場合は保存する  
             $post->fill($input)->save();
-
+            return redirect('/posts/' . $post->id);
         }
-
-        return redirect('/posts/' . $post->id);
     }
 
     public function edit(Post $post)
