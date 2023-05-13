@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 50);
             $table->string('meaning', 200);
-            $table->foreignId('category_id')->constrained()->nullable();
+            // $table->foreignId('category_id')->constrained()->nullable();
             $table->integer('count');
             $table->timestamps();
             $table->softDeletes();
