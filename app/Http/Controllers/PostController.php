@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
+use GuzzleHttp\Client;
 
 class PostController extends Controller
 {
@@ -34,13 +35,12 @@ class PostController extends Controller
     public function store(Post $post, Request $request)
     {
         $input = $request['post'];
-        //dd($post->count);
-        // $data = [
-        //     'count' => $post->count + 1, // 更新または追加するデータ
-        //     // 他のデータも追加する場合は、連想配列に追加する
-        // ];
-        
-        //$post = Post::updateOrCreate(['name' => $input['name']], $data);
+
+        // 認証キーが設定されている場合のみ翻訳する
+        if (config('services.deepl.auth_key')) {
+            $input['meaning'] = $this->translate($input['name']);
+        }
+
          // 更新または追加するデータを指定した条件で取得する
         $existingPost = Post::where('name', $input['name'])->first();
 
@@ -71,4 +71,22 @@ class PostController extends Controller
         return redirect('/posts/' . $post->id);
     }
 
+    // 翻訳結果を出力する
+    public function translate(String $text)
+    {
+        $client = new Client();
+
+        $response = $client->request('POST', 'https://api-free.deepl.com/v2/translate', [
+            'form_params' => [
+                'auth_key' => config('services.deepl.auth_key'),
+                'text' => $text,
+                'target_lang' => 'JA',
+            ]
+        ]);
+
+        $response = json_decode($response->getBody(), true);
+
+        //return view('posts/translate')->with(['response' => $response]);
+        return $response['translations'][0]['text'];
+    }
 }
