@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'deepl' => [
+        'auth_key' => env('DEEPL_AUTH_KEY'),
+    ],
+
 ];

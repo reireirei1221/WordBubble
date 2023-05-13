@@ -12,7 +12,6 @@ class Post extends Model
     protected $fillable = [
         'name',
         'meaning',
-        'category_id',
         'count',
     ];
 
