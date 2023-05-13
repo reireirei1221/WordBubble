@@ -23,10 +23,21 @@ class PostController extends Controller
         return view('posts/create')->with(['categories' => $category->get()]);
     }
 
+    // public function store(Post $post, Request $request)
+    // {
+    //     $input = $request['post'];
+    //     $post->fill($input)->save();
+    //     return redirect('/posts/' . $post->id);
+    // }
+
     public function store(Post $post, Request $request)
     {
         $input = $request['post'];
-        $post->fill($input)->save();
+        $data = [
+            'count' => $post->count + 1, // 更新または追加するデータ
+            // 他のデータも追加する場合は、連想配列に追加する
+        ];
+        Post::updateOrCreate(['name' => $input['name']], $data);
         return redirect('/posts/' . $post->id);
     }
 
