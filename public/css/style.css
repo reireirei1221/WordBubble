@@ -1,0 +1,49 @@
+h1 {
+    color: red;
+}
+
+.circle {
+    display: inline-grid;
+    width: var(--circle-size);
+    height: var(--circle-size);
+    border-radius: 50%;
+    background-color: skyblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: var(--font-size);
+    font-weight: bold;
+    /* transform: translate(-50%, -50%); */
+    /* animation: floating-animation 3s ease-in-out infinite; */
+}
+
+.text {
+    text-align: center;
+    color:#fff;
+}
+
+header {
+    background-color: #f2f2f2;
+    padding: 10px;
+}
+
+header img {
+    width: 100px;
+}
+
+header nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #333;
+}
