@@ -27,12 +27,12 @@
             @csrf
             <div class='center'>
                 <h2>front</h2>
-                <input type="text" name="post[name]" value="{{ old('post.name') }}"/>
+                <input type="text" name="post[name]" placeholder="単語を入力してください" value="{{ old('post.name') }}"/>
                 <p class="name__error" style="color:red">{{ $errors->first('post.name') }}</p>
             </div>
             <div class='center'>
                 <h2>Back</h2>
-                <textarea name="post[meaning]">{{ old('post.meaning') }}</textarea>
+                <textarea name="post[meaning]" placeholder="単語の意味を入力してください">{{ old('post.meaning') }}</textarea>
                 <p class="meaning__error" style="color:red">{{ $errors->first('post.meaning') }}</p>
             </div>
             <div>
