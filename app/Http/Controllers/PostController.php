@@ -48,11 +48,13 @@ class PostController extends Controller
             // データが存在する場合はcountを1インクリメントする
             $existingPost->count += 1;
             $existingPost->save();
-            return redirect('/posts/' . $existingPost->id);
+            # return redirect('/posts/' . $existingPost->id);
+            return redirect('/');
         } else {
             // データが存在しない場合は保存する  
             $post->fill($input)->save();
-            return redirect('/posts/' . $post->id);
+            # return redirect('/posts/' . $post->id);
+            return redirect('/');
         }
     }
 

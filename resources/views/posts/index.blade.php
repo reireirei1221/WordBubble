@@ -97,6 +97,7 @@
                     //circle.attr("fill", endColor);
                     var texts = d3.selectAll("text");
                     var text = texts._groups[0][e.i].innerHTML;
+                    speakWord(text, e.name);
                     texts._groups[0][e.i].innerHTML = (text === e.name) ? e.meaning : e.name;
                 })
                 .call(d3.drag().on("drag", dragCircle));
@@ -145,6 +146,17 @@
                 var rotation = t * 360;
                 d3.select(this).attr("transform", "rotate(" + rotation + ", 200, 200)");
             };
+        }
+
+        function speakWord(text, word) {
+            var msg = new SpeechSynthesisUtterance(text);
+            if (text === word) {
+                msg.lang = 'en-US';
+            }
+            else {
+                msg.lang = 'ja-JP';
+            }
+            speechSynthesis.speak(msg);
         }
 
         // シミュレーションの更新時に呼ばれる関数
