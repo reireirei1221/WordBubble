@@ -12,6 +12,7 @@
     <header>
         <nav>
             <ul>
+            <li class="app-name">WordBubbles</li>
             <li><a href="/">
                 <span class="material-symbols-outlined">home</span>
                 </a>

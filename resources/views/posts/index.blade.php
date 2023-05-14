@@ -14,6 +14,7 @@
     <header>
         <nav>
             <ul>
+            <li class="app-name">WordBubbles</li>
             <li><a href="/">
                 <span class="material-symbols-outlined">home</span>
                 </a>
@@ -71,7 +72,7 @@
         }
         var simulation = d3.forceSimulation(nodes)
             .force('center', d3.forceCenter().x(500).y(250))
-            .force("charge", d3.forceManyBody().strength(1500))  //反発力の設定
+            .force("charge", d3.forceManyBody().strength(3000))  //反発力の設定
             .force('collision', d3.forceCollide().radius(function(d) {
                 return d.r;
             }))

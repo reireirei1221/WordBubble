@@ -6,6 +6,11 @@
       'opsz' 48;
 }
 
+.app-name {
+    color: rgb(25, 174, 223);
+    font-weight: bold;
+}
+
 .center{
     text-align:center;
 }

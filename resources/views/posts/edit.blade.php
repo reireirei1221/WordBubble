@@ -5,13 +5,19 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Blog</title>
     </head>
-    <nav>
-        <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="#">メニュー2</a></li>
-        <li><a href='/posts/create'>Add</a></li>
-        </ul>
-    </nav>
+    <header>
+        <nav>
+            <ul>
+            <li class="app-name">WordBubbles</li>
+            <li><a href="/">
+                <span class="material-symbols-outlined">home</span>
+                </a>
+            </li>
+            <li><a href='/posts/create'>
+                <span class="material-symbols-outlined">add_circle</span></a></li>
+            </ul>
+        </nav>
+    </header>
     <body>
         <h1 class="title">Edit</h1>
         <div class="content">
