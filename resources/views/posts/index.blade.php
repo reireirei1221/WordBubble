@@ -92,16 +92,14 @@
                     var circle = d3.select(this);
                     console.log(circle);
                     var currentColor = circle.attr("fill");
-                    var newColor = (currentColor === "lightblue") ? "blue" : "lightblue";
-                    circle.attr("fill", newColor);
+                    var endColor = (currentColor === "lightblue") ? "blue" : "lightblue";
+                    changeColor(circle, endColor);
+                    //circle.attr("fill", endColor);
                     var texts = d3.selectAll("text");
                     var text = texts._groups[0][e.i].innerHTML;
                     texts._groups[0][e.i].innerHTML = (text === e.name) ? e.meaning : e.name;
-                    // var text = texts._groups[0][e.i].innerHTML;
-                    // console.log(text);
-                    // texts[e.i]_groups[0][0].innerHTML = (text === e.name) ? e.meaning : e.name;
-                });
-                // .call(d3.drag().on("drag", dragCircle));
+                })
+                .call(d3.drag().on("drag", dragCircle));
             
             var texts = svg.selectAll("text")
                 .data(nodes)
@@ -116,13 +114,59 @@
                 .attr("font-family", "sans-serif")
                 .attr("font-weight", "bold")
                 .attr("fill", "white");
+            
+            simulation.alphaTarget(0.3).restart();
+        }
+
+        function changeColor(circle, endColor) {
+            console.log(circle.attr("fill"));
+            circle.transition()
+                .duration(1000)
+                .attrTween("fill", function() {
+                    var startColor = circle.attr("fill");
+                    return function(t) {
+                        var interpolate = d3.interpolateHsl(startColor, endColor);
+                        var currentColor = interpolate(t);
+                        return currentColor;
+                    };
+                })
+                .on("end", function() {
+                    circle.attr("fill", endColor);
+                });
+            }
+
+        function rotateColor(startColor, endColor) {
+
+            return function(t) {
+                var interpolate = d3.interpolateHsl(startColor, endColor);
+                var currentColor = interpolate(t);
+                d3.select(this).attr("fill", currentColor);
+
+                var rotation = t * 360;
+                d3.select(this).attr("transform", "rotate(" + rotation + ", 200, 200)");
+            };
         }
 
         // シミュレーションの更新時に呼ばれる関数
         function ticked() {
             var circles = svg.selectAll("circle")
-                .attr("cx", function(d) { return d.x; })
-                .attr("cy", function(d) { return d.y; });
+                .attr("cx", function(d) {
+                    // 外枠にぶつかる場合は座標を調整する
+                    if (d.x < d.r) {
+                        d.x = d.r;
+                    } else if (d.x > width - d.r) {
+                        d.x = width - d.r;
+                    }
+                    if (d.y < d.r) {
+                        d.y = d.r;
+                    } else if (d.y > height - d.r) {
+                        d.y = height - d.r;
+                    }
+                    return d.x;
+                })
+                .attr("cy", function(d) {
+                    return d.y;
+                });
 
             var texts = svg.selectAll("text")
                 .attr("x", function(d) { return d.x; })
