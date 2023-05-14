@@ -5,6 +5,13 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Blog</title>
     </head>
+    <nav>
+        <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#">メニュー2</a></li>
+        <li><a href='/posts/create'>Add</a></li>
+        </ul>
+    </nav>
     <body>
         <h1 class="title">編集画面</h1>
         <div class="content">

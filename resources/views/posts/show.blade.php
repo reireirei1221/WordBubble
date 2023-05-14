@@ -8,6 +8,13 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     </head>
+    <nav>
+        <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#">メニュー2</a></li>
+        <li><a href='/posts/create'>Add</a></li>
+        </ul>
+    </nav>
     <meaning>
         <h1>詳細画面</h1>
         <div>
