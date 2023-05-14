@@ -48,8 +48,8 @@
         @endforeach -->
         <script>
 
-        var width = 2000;
-        var height = 1000;
+        var width = 1000;
+        var height = 500;
         var svg = d3.select("#circle-container")
             .append("svg")
             .attr("width", width)
@@ -62,15 +62,18 @@
         for (var i = 0; i < posts.length; i++) {
             var post = posts[i];
             var circle = {
-                x: Math.random() * 2000,
-                y: Math.random() * 1000,
+                x: Math.random() * 1000,
+                y: Math.random() * 500,
                 r: post.count * 50,
+                i: i,
                 name: post.name,
+                meaning: post.meaning,
             };
             nodes.push(circle);
         }
         var simulation = d3.forceSimulation(nodes)
-            .force('center', d3.forceCenter().x(1000).y(500))
+            .force('center', d3.forceCenter().x(500).y(250))
+            .force("charge", d3.forceManyBody().strength(1500))  //反発力の設定
             .force('collision', d3.forceCollide().radius(function(d) {
                 return d.r;
             }))
@@ -85,9 +88,35 @@
                 .attr("cy", function(d) { return d.y; })
                 .attr("r", function(d) { return d.r; })
                 .attr("fill", "red")
-                .attr("text", function(d) { return d.name; })
-                .attr("font-size", function(d) { return d.r / 10; })
-                .attr("font-color", "white");
+                .attr("font-color", "white")
+                .on("click", function(d, e) {
+                    var circle = d3.select(this);
+                    console.log(circle);
+                    var currentColor = circle.attr("fill");
+                    var newColor = (currentColor === "red") ? "blue" : "red";
+                    circle.attr("fill", newColor);
+                    var texts = d3.selectAll("text");
+                    var text = texts._groups[0][e.i].innerHTML;
+                    texts._groups[0][e.i].innerHTML = (text === e.name) ? e.meaning : e.name;
+                    // var text = texts._groups[0][e.i].innerHTML;
+                    // console.log(text);
+                    // texts[e.i]_groups[0][0].innerHTML = (text === e.name) ? e.meaning : e.name;
+                });
+                // .call(d3.drag().on("drag", dragCircle));
+            
+            var texts = svg.selectAll("text")
+                .data(nodes)
+                .enter()
+                .append("text")
+                .attr("x", function(d) { return d.x; })
+                .attr("y", function(d) { return d.y; })
+                .attr("text-anchor", "middle")  // テキストの水平位置を中央揃えに設定
+                .attr("dy", ".35em")  // テキストの垂直位置を微調整
+                .text(function(d) { return d.name; })
+                .attr("font-size", function(d) { return d.r / 4; })
+                .attr("font-family", "sans-serif")
+                .attr("font-weight", "bold")
+                .attr("fill", "white");
         }
 
         // シミュレーションの更新時に呼ばれる関数
@@ -95,6 +124,26 @@
             var circles = svg.selectAll("circle")
                 .attr("cx", function(d) { return d.x; })
                 .attr("cy", function(d) { return d.y; });
+
+            var texts = svg.selectAll("text")
+                .attr("x", function(d) { return d.x; })
+                .attr("y", function(d) { return d.y; });
+        }
+
+        function dragCircle(event, d) {
+            d.x = event.x;
+            d.y = event.y;
+            d3.select(this)
+                .attr("cx", d.x)
+                .attr("cy", d.y);
+        }
+
+        function dragText(event, d) {
+            d.x = event.x;
+            d.y = event.y;
+            d3.select(this)
+                .attr("x", d.x)
+                .attr("y", d.y);
         }
 
         draw_circle(); // 円を描画
