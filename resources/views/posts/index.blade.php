@@ -7,49 +7,47 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="/css/style.css" >
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script src="/js/content.js"></script>
     </head>
     <header>
         <nav>
             <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="#">メニュー2</a></li>
-            <li><a href='/posts/create'>Add</a></li>
+            <li><a href="/">
+                <span class="material-symbols-outlined">home</span>
+                </a>
+            </li>
+            <li><a href='/posts/create'>
+                <span class="material-symbols-outlined">add_circle</span></a></li>
             </ul>
         </nav>
     </header>
     <body>
         <!-- <h1>Remember！</h1>
         <a href='/posts/create'>Add</a> -->
-        <div>
-            @foreach ($posts as $post)
-                <div class="circle" style='--circle-size: {{ $post->count * 80 }}px; --font-size: {{ $post->count * 10 }}px' onclick="turnOver(this, '{{ $post->name }}', '{{ $post->meaning }}')">
+        <!--<div>-->
+        <!--    @foreach ($posts as $post)-->
+        <!--        <div class="circle" style='--circle-size: {{ $post->count * 80 }}px; --font-size: {{ $post->count * 10 }}px' onclick="turnOver(this, '{{ $post->name }}', '{{ $post->meaning }}')">-->
                     <!-- <p style='font-size: {{ $post->count * 10}}px;'> -->
-                        <a href="/posts/{{ $post->id }}">
-                            <span class="text">
-                                {{ $post->name }}
-                            </span>
-                        </a>
+        <!--                <a href="/posts/{{ $post->id }}">-->
+        <!--                    <span class="text">-->
+        <!--                        {{ $post->name }}-->
+        <!--                    </span>-->
+        <!--                </a>-->
                     <!-- </p> -->
-                </div>
-            @endforeach
-        </div>
-        <div>
-            {{ $posts->links() }}
-        </div>
+        <!--        </div>-->
+        <!--    @endforeach-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--    {{ $posts->links() }}-->
+        <!--</div>-->
         <div id="circle-container" width="2000" height="1000">
-        <script src="js/content.js">
-        </script>
-        <!-- @foreach ($posts as $post)
-            <script>
-                draw_circle({{ $post->count * 50 }});
-            </script>
-        @endforeach -->
+        
         <script>
 
-        var width = 1000;
-        var height = 500;
+        var width = 2000;
+        var height = 1000;
         var svg = d3.select("#circle-container")
             .append("svg")
             .attr("width", width)
@@ -62,8 +60,8 @@
         for (var i = 0; i < posts.length; i++) {
             var post = posts[i];
             var circle = {
-                x: Math.random() * 1000,
-                y: Math.random() * 500,
+                x: Math.random() * 2000,
+                y: Math.random() * 1000,
                 r: post.count * 50,
                 i: i,
                 name: post.name,
@@ -87,13 +85,13 @@
                 .attr("cx", function(d) { return d.x; })
                 .attr("cy", function(d) { return d.y; })
                 .attr("r", function(d) { return d.r; })
-                .attr("fill", "red")
+                .attr("fill", "lightblue")
                 .attr("font-color", "white")
                 .on("click", function(d, e) {
                     var circle = d3.select(this);
                     console.log(circle);
                     var currentColor = circle.attr("fill");
-                    var newColor = (currentColor === "red") ? "blue" : "red";
+                    var newColor = (currentColor === "lightblue") ? "blue" : "lightblue";
                     circle.attr("fill", newColor);
                     var texts = d3.selectAll("text");
                     var text = texts._groups[0][e.i].innerHTML;

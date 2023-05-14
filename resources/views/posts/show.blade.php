@@ -4,18 +4,23 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <name>Posts</name>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link rel="stylesheet" href="/css/style2.css" >
+        <link rel="stylesheet" href="/css/style.css" >
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     </head>
-    <nav>
-        <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="#">メニュー2</a></li>
-        <li><a href='/posts/create'>Add</a></li>
-        </ul>
-    </nav>
+    <header>
+        <nav>
+            <ul>
+            <li><a href="/">
+                <span class="material-symbols-outlined">home</span>
+                </a>
+            </li>
+            <li><a href='/posts/create'>
+                <span class="material-symbols-outlined">add_circle</span></a></li>
+            </ul>
+        </nav>
+    </header>
     <body>
         <div class='center'>
             <h1>Details</h1>
@@ -24,8 +29,8 @@
                 <p>Back：{{ $post->meaning }}</p>
         
             </div>
-                <p class="edit">[<a href="/posts/{{ $post->id }}/edit">Edit</a>]</p>
+                <!--<p class="edit">[<a href="/posts/{{ $post->id }}/edit">Edit</a>]</p>-->
         </div>
-            <a href="/">Return</a>
+           
     </body>
 </html>

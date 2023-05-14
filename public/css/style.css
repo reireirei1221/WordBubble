@@ -6,11 +6,13 @@
       'opsz' 48;
 }
 
-
+.center{
+    text-align:center;
+}
 
 
 h1 {
-    color: red;
+    color: lightblue;
 }
 
 .circle {
