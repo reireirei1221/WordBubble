@@ -35,7 +35,7 @@ class PostController extends Controller
     public function store(Post $post, Request $request)
     {
         $input = $request['post'];
-        dd($input);
+        // dd($input);
 
         // 認証キーが設定されている場合のみ翻訳する
         if (config('services.deepl.auth_key')) {
