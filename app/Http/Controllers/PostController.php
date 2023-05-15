@@ -35,6 +35,7 @@ class PostController extends Controller
     public function store(Post $post, Request $request)
     {
         $input = $request['post'];
+        dd($input);
 
         // 認証キーが設定されている場合のみ翻訳する
         if (config('services.deepl.auth_key')) {
@@ -56,6 +57,36 @@ class PostController extends Controller
             # return redirect('/posts/' . $post->id);
             return redirect('/');
         }
+    }
+
+    public function store_outside(Post $word, Request $request)
+    {
+        $name = $request->input('name');
+        dd($name);
+
+        $word->name = $name;
+        $word->save();
+
+        // // 認証キーが設定されている場合のみ翻訳する
+        // if (config('services.deepl.auth_key')) {
+        //     $input['meaning'] = $this->translate($input['name']);
+        // }
+
+        //  // 更新または追加するデータを指定した条件で取得する
+        // $existingPost = Post::where('name', $input['name'])->first();
+
+        // if ($existingPost) {
+        //     // データが存在する場合はcountを1インクリメントする
+        //     $existingPost->count += 1;
+        //     $existingPost->save();
+        //     # return redirect('/posts/' . $existingPost->id);
+        //     return redirect('/');
+        // } else {
+        //     // データが存在しない場合は保存する  
+        //     $post->fill($input)->save();
+        //     # return redirect('/posts/' . $post->id);
+        //     return redirect('/');
+        // }
     }
 
     public function edit(Post $post)
