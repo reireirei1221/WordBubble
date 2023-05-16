@@ -105,8 +105,12 @@ class PostController extends Controller
     
     public function deleteAll()
     {
-        // Postモデルを使用して全てのpostデータを削除
-        Post::truncate();
+        // Postモデルを使用して全てのpostデータを取得
+        $posts = Post::all();
+
+        foreach ($posts as $post) {
+            $post->delete();
+        }
 
         // 削除後の処理（例：リダイレクトなど）
         return redirect('/');
