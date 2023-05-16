@@ -67,9 +67,25 @@ class PostController extends Controller
         $post->name = $name;
         $post->meaning = "";
         $post->count = 1;
-        $post->save();
+        
+        // 認証キーが設定されている場合のみ翻訳する
+        if (config('services.deepl.auth_key')) {
+            $input['meaning'] = $this->translate($input['name']);
+        }
 
-        return redirect('/');
+         // 更新または追加するデータを指定した条件で取得する
+        $existingPost = Post::where('name', $name)->first();
+
+        if ($existingPost) {
+            // データが存在する場合はcountを1インクリメントする
+            $existingPost->count += 1;
+            $existingPost->save();
+            return redirect('/');
+        } else {
+            // データが存在しない場合は保存する  
+            $post->save();
+            return redirect('/');
+        }
     }
 
     public function edit(Post $post)
