@@ -62,7 +62,7 @@ class PostController extends Controller
   
     public function store_outside(Request $request)
     {
-        Log::info("function start");
+//         Log::info("function start");
 
         $name = $request->query('name');
 //         Log::info($name);
