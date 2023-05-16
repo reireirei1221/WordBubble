@@ -26,7 +26,7 @@
             </li>
             <li>
                 <a href='/posts/deleteAll'>
-                    <span>deleteAll</span>
+                    <span class="material-symbols-outlined">delete</span>
                 </a>
             </li>
             </ul>

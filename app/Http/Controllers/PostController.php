@@ -103,11 +103,11 @@ class PostController extends Controller
         return redirect('/posts/' . $post->id);
     }
     
-    public function deleteAll()
+    public function delete_all()
     {
+        
         // Postモデルを使用して全てのpostデータを取得
         $posts = Post::all();
-
         foreach ($posts as $post) {
             $post->delete();
         }
