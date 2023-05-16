@@ -102,6 +102,15 @@ class PostController extends Controller
 
         return redirect('/posts/' . $post->id);
     }
+    
+    public function deleteAll()
+    {
+        // Postモデルを使用して全てのpostデータを削除
+        Post::truncate();
+
+        // 削除後の処理（例：リダイレクトなど）
+        return redirect('/');
+    }
 
     // 翻訳結果を出力する
     public function translate(String $text)
