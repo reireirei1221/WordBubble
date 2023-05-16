@@ -72,6 +72,9 @@ class PostController extends Controller
 
         $post->name = $name;
         Log::info("name save done");
+        
+        $post->meaning = ('');
+        $post->count = 1;
 
         $post->save();
         Log::info("data save done");
