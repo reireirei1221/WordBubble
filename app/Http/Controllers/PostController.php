@@ -62,22 +62,10 @@ class PostController extends Controller
   
     public function store_outside(Request $request)
     {
-//         Log::info("function start");
-
         $name = $request->query('name');
-//         Log::info($name);
-
         $post = new Post();
-//         Log::info("post made");
-
         $post->name = $name;
-//         Log::info("name save done");
-        
-        $post->meaning = ('');
-        $post->count = 1;
-
         $post->save();
-//         Log::info("data save done");
 
         return redirect('/');
     }
