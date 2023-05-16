@@ -65,6 +65,8 @@ class PostController extends Controller
         $name = $request->query('name');
         $post = new Post();
         $post->name = $name;
+        $post->meaning = "";
+        $post->count = 1;
         $post->save();
 
         return redirect('/');
