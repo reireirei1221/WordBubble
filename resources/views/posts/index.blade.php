@@ -19,8 +19,16 @@
                 <span class="material-symbols-outlined">home</span>
                 </a>
             </li>
-            <li><a href='/posts/create'>
-                <span class="material-symbols-outlined">add_circle</span></a></li>
+            <li>
+                <a href='/posts/create'>
+                    <span class="material-symbols-outlined">add_circle</span>
+                </a>
+            </li>
+            <li>
+                <a href='/posts/deleteAll'>
+                    <span>deleteAll</span>
+                </a>
+            </li>
             </ul>
         </nav>
     </header>
