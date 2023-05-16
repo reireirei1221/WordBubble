@@ -59,17 +59,23 @@ class PostController extends Controller
         }
     }
 
+  
     public function store_outside(Request $request)
     {
-        echo "function start";
-        $name = $request->query('name'); // クエリパラメータ 'name' の値を取得
-        echo $name;
-        $post = new Post(); // Postモデルのインスタンスを作成
-        echo "post made";
-        $post->name = $name; // $postの'name'属性に値を代入
-        echo "name save done";
-        $post->save(); // データベースに保存
-        echo "data save done";
+        Log::info("function start");
+
+        $name = $request->query('name');
+        Log::info($name);
+
+        $post = new Post();
+        Log::info("post made");
+
+        $post->name = $name;
+        Log::info("name save done");
+
+        $post->save();
+        Log::info("data save done");
+
         return redirect('/');
     }
 
