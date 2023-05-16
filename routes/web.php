@@ -17,7 +17,7 @@ use App\Http\Controllers\CategoryController;
 
 Route::get('/', [PostController::class, 'index']);
 Route::post('/posts',  [PostController::class, 'store']);
-Route::post('/words',  [PostController::class, 'store_outside']);
+Route::get('/words',  [PostController::class, 'store_outside']);
 Route::get('/posts/create',  [PostController::class, 'create']);
 Route::get('/posts/{post}',  [PostController::class, 'show']);
 Route::put('/posts/{post}',  [PostController::class, 'update']);
