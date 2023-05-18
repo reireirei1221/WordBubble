@@ -6,7 +6,7 @@ WordBubblesは、Webページ上の英単語をダブルクリックする回数
 
 ## 使用方法
 1. 本アプリ用のChrome拡張機能 (https://github.com/reireirei1221/WordBubbles_extension.git) をダウンロードし、拡張機能を追加します。
-1. Webページを開きます。
+1. Webページ (https://dl.acm.org/*) を開きます。(manifest.jsonファイルから変更できます。)
 2. Webページ上の英単語をダブルクリックします。
 3. アプリのサイト (https://wordbubbles.herokuapp.com/) を開きます。
 4. ダブルクリックした単語が、その回数に応じて大きく表示されます。
