@@ -5,9 +5,10 @@ Word Visualization Appは、Webページ上の英単語をダブルクリック�
 ダブルクリックした単語はChrome拡張機能によって取得します。Webページ上の英単語をダブルクリックすると意味を表示してくれるGoogle Dictionaryの拡張機能と併用することを想定しています。複数回意味を確認する単語は出現頻度が高いのにも関わらず、定着していないので優先的に暗記する必要があると判断し、大きく可視化しています。
 
 ## 使用方法
+1. 本アプリ用のChrome拡張機能 (https://github.com/reireirei1221/WordBubbles_extension.git) をダウンロードし、拡張機能を追加します。
 1. Webページを開きます。
 2. Webページ上の英単語をダブルクリックします。
-3. アプリのサイト(https://wordbubbles.herokuapp.com/)を開きます。
+3. アプリのサイト (https://wordbubbles.herokuapp.com/) を開きます。
 4. ダブルクリックした単語が、その回数に応じて大きく表示されます。
 
 ## 必要な環境
