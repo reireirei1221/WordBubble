@@ -89,7 +89,7 @@ class PostController extends Controller
     
     public function store_author(Request $request)
     {
-        $name = $request->query('name');
+        $name = $request->input('name');
         // dd($name);
         $post = new Post();
         $post->name = $name;
