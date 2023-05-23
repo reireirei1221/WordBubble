@@ -80,12 +80,11 @@ class PostController extends Controller
             // データが存在する場合はcountを1インクリメントする
             $existingPost->count += 1;
             $existingPost->save();
-            return redirect('/');
         } else {
             // データが存在しない場合は保存する  
             $post->save();
-            return redirect('/');
         }
+        return redirect('/');
     }
 
     public function edit(Post $post)
