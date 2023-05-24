@@ -74,6 +74,7 @@ class AuthorController extends Controller
         for ($i = 0; $i < count($authors); $i++) {
             $author = new Author();
             $author->name = $authors[$i]->name;
+            $author->count = 1;
             $existingAuthor = Author::where('name', $author->name)->first();
             if ($existingAuthor) {
                 // データが存在する場合はcountを1インクリメントする
