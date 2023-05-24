@@ -15,43 +15,24 @@
         <nav>
             <ul>
             <li class="app-name">WordBubbles</li>
-            <li><a href="/">
+            <li><a href="/authors/index">
                 <span class="material-symbols-outlined">home</span>
                 </a>
             </li>
             <li>
-                <a href='/posts/create'>
+                <a href='/authors/create'>
                     <span class="material-symbols-outlined">add_circle</span>
                 </a>
             </li>
             <li>
-                <a href='/posts/deleteAll'>
+                <a href='/authors/deleteAll'>
                     <span class="material-symbols-outlined">delete</span>
                 </a>
             </li>
-            <li>
             </ul>
         </nav>
     </header>
     <body>
-        <!-- <h1>Remember！</h1>
-        <a href='/posts/create'>Add</a> -->
-        <!--<div>-->
-        <!--    @foreach ($posts as $post)-->
-        <!--        <div class="circle" style='--circle-size: {{ $post->count * 80 }}px; --font-size: {{ $post->count * 10 }}px' onclick="turnOver(this, '{{ $post->name }}', '{{ $post->meaning }}')">-->
-                    <!-- <p style='font-size: {{ $post->count * 10}}px;'> -->
-        <!--                <a href="/posts/{{ $post->id }}">-->
-        <!--                    <span class="text">-->
-        <!--                        {{ $post->name }}-->
-        <!--                    </span>-->
-        <!--                </a>-->
-                    <!-- </p> -->
-        <!--        </div>-->
-        <!--    @endforeach-->
-        <!--</div>-->
-        <!--<div>-->
-        <!--    {{ $posts->links() }}-->
-        <!--</div>-->
         <div id="circle-container" width="2000" height="1000">
         
         <script>
@@ -65,17 +46,16 @@
 
         var nodes = [];
         
-        var posts = {!! json_encode($posts) !!}; // PHPの配列データをJavaScriptの配列に変換
-        posts = posts['data'];
-        for (var i = 0; i < posts.length; i++) {
-            var post = posts[i];
+        var authors = {!! json_encode($authors) !!}; // PHPの配列データをJavaScriptの配列に変換
+        authors = authors['data'];
+        for (var i = 0; i < authors.length; i++) {
+            var author = authors[i];
             var circle = {
                 x: Math.random() * 2000,
                 y: Math.random() * 1000,
-                r: post.count * 50,
+                r: author.count * 50,
                 i: i,
-                name: post.name,
-                meaning: post.meaning,
+                name: author.name,
             };
             nodes.push(circle);
         }
@@ -106,8 +86,8 @@
                     //circle.attr("fill", endColor);
                     var texts = d3.selectAll("text");
                     var text = texts._groups[0][e.i].innerHTML;
-                    speakWord(text, e.name);
-                    texts._groups[0][e.i].innerHTML = (text === e.name) ? e.meaning : e.name;
+                    // speakWord(text, e.name);
+                    // texts._groups[0][e.i].innerHTML = (text === e.name) ? e.meaning : e.name;
                 })
                 .call(d3.drag().on("drag", dragCircle));
             
@@ -157,16 +137,16 @@
             };
         }
 
-        function speakWord(text, word) {
-            var msg = new SpeechSynthesisUtterance(text);
-            if (text === word) {
-                msg.lang = 'en-US';
-            }
-            else {
-                msg.lang = 'ja-JP';
-            }
-            speechSynthesis.speak(msg);
-        }
+        // function speakWord(text, word) {
+        //     var msg = new SpeechSynthesisUtterance(text);
+        //     if (text === word) {
+        //         msg.lang = 'en-US';
+        //     }
+        //     else {
+        //         msg.lang = 'ja-JP';
+        //     }
+        //     speechSynthesis.speak(msg);
+        // }
 
         // シミュレーションの更新時に呼ばれる関数
         function ticked() {
@@ -212,19 +192,19 @@
 
         draw_circle(); // 円を描画
 
-        function turnOver(element, name, meaning) {
-            console.log(element.innerText);
-            var linkElement = element.querySelector('a');
-            if (linkElement.innerText === name) {
-                linkElement.innerText = meaning;
-                element.style.backgroundColor = 'blue';
-                linkElement.style.color = 'white';
-            } else {
-                linkElement.innerText = name;
-                element.style.backgroundColor = 'lightblue';
-                linkElement.style.color = 'white';
-            }
-        }
+        // function turnOver(element, name, meaning) {
+        //     console.log(element.innerText);
+        //     var linkElement = element.querySelector('a');
+        //     if (linkElement.innerText === name) {
+        //         linkElement.innerText = meaning;
+        //         element.style.backgroundColor = 'blue';
+        //         linkElement.style.color = 'white';
+        //     } else {
+        //         linkElement.innerText = name;
+        //         element.style.backgroundColor = 'lightblue';
+        //         linkElement.style.color = 'white';
+        //     }
+        // }
 
         </script>
         <!-- <script src="js/simulation.js"></script> -->
