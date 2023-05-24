@@ -100,7 +100,7 @@
                 .attr("text-anchor", "middle")  // テキストの水平位置を中央揃えに設定
                 .attr("dy", ".35em")  // テキストの垂直位置を微調整
                 .text(function(d) { return d.name; })
-                .attr("font-size", function(d) { return d.r / 10; })
+                .attr("font-size", function(d) { return d.r / 7; })
                 .attr("font-family", "sans-serif")
                 .attr("font-weight", "bold")
                 .attr("fill", "white");
