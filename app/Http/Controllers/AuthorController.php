@@ -58,35 +58,37 @@ class AuthorController extends Controller
     {
         $title_name = $request->input('title');
         $authors = $request->input("authors");
-        
-        $title = new Title();
-        $title->name =  $title_name;
-        
+
         $existingTitle = Title::where('name', $title_name)->first();
         if ($existingTitle) {
-            // データが存在する場合はcountを1インクリメントする
             return redirect('/');
         } else {
             // データが存在しない場合は保存する  
+            $title = new Title();
+            $title->name = $title_name;
             $title->save();
         }
-        
+
         for ($i = 0; $i < count($authors); $i++) {
-            $author = new Author();
-            $author->name = $authors[$i]->name;
-            $author->count = 1;
-            $existingAuthor = Author::where('name', $author->name)->first();
+            $author_name = $authors[$i];
+
+            $existingAuthor = Author::where('name', $author_name)->first();
             if ($existingAuthor) {
                 // データが存在する場合はcountを1インクリメントする
                 $existingAuthor->count += 1;
                 $existingAuthor->save();
             } else {
                 // データが存在しない場合は保存する  
+                $author = new Author();
+                $author->name = $author_name;
+                $author->count = 1;
                 $author->save();
             }
         }
+
         return redirect('/');
     }
+
 
     public function delete_all()
     {
