@@ -53,6 +53,42 @@
                 </a>
             </li>
             <li>
+            <!-- <label for="dog-names"></label>  -->
+                <select name="part-of-speeches" id="part-of-speeches">
+                    <option value="">All</option>
+                    <option value="noun">Noun</option> 
+                    <option value="verb">Verb</option>
+                    <option value="adjective">Adjective</option>
+                    <option value="adverb">Adverb</option>
+                    <option value="preposition">Preposition</option>
+                </select>
+            <script>
+                // var partOfSpeeches = {!! json_encode($part_of_speech) !!};
+                // // ドロップダウンの要素を取得
+                var dropdown = document.getElementById('part-of-speeches');
+
+                // // 選択されたオプションに selected 属性を設定
+                // var selectedOption = this.querySelector('option[value="' + partOfSpeeches + '"]');
+                // if (selectedOption) {
+                //     selectedOption.setAttribute('selected', 'selected');
+                // }
+
+                // 選択イベントを監視
+                dropdown.addEventListener('change', function() {
+
+                    // 選択されたオプションの値を取得
+                    var selectedValue = this.value;
+
+                    if (selectedValue == "") {
+                        window.location.href = '/words/index';
+                    }
+
+                    // 選択されたオプションに基づいてリダイレクト
+                    window.location.href = '/words/indexFilteredByPartOfSpeech/' + selectedValue;
+                });
+            </script>
+            </li>
+            <li>
             </ul>
         </nav>
     </x-slot>
@@ -90,6 +126,8 @@
         
         var posts = {!! json_encode($posts) !!}; // PHPの配列データをJavaScriptの配列に変換
         posts = posts['data'];
+
+        var part_of_speech = {!! json_encode($part_of_speech) !!};
         for (var i = 0; i < posts.length; i++) {
             var post = posts[i];
             var circle = {
@@ -100,7 +138,8 @@
                 name: post.name,
                 meaning: post.meaning,
             };
-            if ($part_of_speech == 'all' || $part_of_speech == post.part_of_speech) {
+            
+            if (part_of_speech == 'all' || part_of_speech == post.part_of_speech) {
                 nodes.push(circle);
             }
         }
