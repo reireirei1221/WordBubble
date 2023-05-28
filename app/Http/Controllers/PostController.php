@@ -68,7 +68,7 @@ class PostController extends Controller
         }
     }
 
-    public function storeFromeOutside(Request $request)
+    public function storeFromOutside(Request $request)
     {
         $name = $request->query('name');
         $post = new Post();
