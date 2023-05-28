@@ -71,7 +71,7 @@ class PostController extends Controller
     public function storeFromOutside(Request $request)
     {
         $name = $request->query('word');
-        // $part_of_speech = $request->query('partOfSpeech');
+        $part_of_speech = $request->query('partOfSpeech');
 
         $post = new Post();
         $post->name = $name;
