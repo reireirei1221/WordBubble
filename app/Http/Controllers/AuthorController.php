@@ -54,7 +54,7 @@ class AuthorController extends Controller
         return redirect('/authors/index');
     }
 
-    public function storeFromeOutside(Request $request)
+    public function storeFromOutside(Request $request)
     {
         $title_name = $request->input('title');
         $authors = $request->input("authors");
