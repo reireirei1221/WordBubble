@@ -70,10 +70,13 @@ class PostController extends Controller
 
     public function storeFromOutside(Request $request)
     {
-        $name = $request->query('name');
+        $name = $request->input('word');
+        $part_of_speech = $request->input('partOfSpeech');
+
         $post = new Post();
         $post->name = $name;
         $post->meaning = "";
+        $post->part_of_speech = $part_of_speech;
         $post->count = 1;
         
         // 認証キーが設定されている場合のみ翻訳する
