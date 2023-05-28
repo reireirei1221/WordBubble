@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::post('/words/storeFromOutside', [PostController::class, 'storeFromeOutside']);
+Route::get('/words/storeFromOutside', [PostController::class, 'storeFromeOutside']);
 Route::post('/authors/storeFromOutside', [AuthorController::class, 'storeFromeOutside']);
 
 Route::controller(PostController::class)->middleware(['auth'])->group(function(){
