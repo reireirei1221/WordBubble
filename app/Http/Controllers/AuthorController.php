@@ -13,15 +13,15 @@ class AuthorController extends Controller
 {
     public function index(Author $author)
     {
-        return view('authors/index')->with(['authors' => $author->getPaginateByLimit()]);
+        return view('authors.index')->with(['authors' => $author->getPaginateByLimit()]);
     }
 
     public function create()
     {
-        return view('authors/create');
+        return view('authors.create');
     }
 
-    public function store_author(Request $request)
+    public function store(Request $request)
     {
         $input = $request['author'];
         $title_name = $input['title'];
@@ -54,14 +54,14 @@ class AuthorController extends Controller
         return redirect('/authors/index');
     }
 
-    public function store_author_outside(Request $request)
+    public function storeFromOutside(Request $request)
     {
         $title_name = $request->input('title');
         $authors = $request->input("authors");
 
         $existingTitle = Title::where('name', $title_name)->first();
         if ($existingTitle) {
-            return redirect('/');
+            return redirect('/authors/index');
         } else {
             // データが存在しない場合は保存する  
             $title = new Title();
@@ -86,11 +86,11 @@ class AuthorController extends Controller
             }
         }
 
-        return redirect('/');
+        return redirect('/authors/index');
     }
 
 
-    public function delete_all()
+    public function deleteAll()
     {
         // authorモデルを使用して全てのauthorデータを取得
         $authors = Author::all();
@@ -98,6 +98,6 @@ class AuthorController extends Controller
             $author->delete();
         }
         // 削除後の処理（例：リダイレクトなど）
-        return redirect('/');
+        return redirect('/authors/index');
     }
 }
