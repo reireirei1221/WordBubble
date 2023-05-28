@@ -14,6 +14,11 @@ class PostController extends Controller
         return view('posts.index')->with(['posts' => $post->getPaginateByLimit()]);
     }
 
+    public function indexFilteredByPartOfSpeech(Post $post, $part_of_speech)
+    {
+        return view('posts.index')->with(['posts' => $post->getPaginateByLimit(), 'part_of_speech' => $part_of_speech]);
+    }
+
     public function show(Post $word)
     {
         $post = Post::where('name', strtolower($word))->first();
