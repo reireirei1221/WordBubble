@@ -1,9 +1,8 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\TitleController;
 use App\Http\Controllers\AuthorController;
 
 /*
@@ -12,23 +11,44 @@ use App\Http\Controllers\AuthorController;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
 
-Route::get('/', [PostController::class, 'index']);
-Route::get('/authors/index', [AuthorController::class, 'index']);
-Route::post('/posts',  [PostController::class, 'store']);
-Route::get('/words',  [PostController::class, 'store_word']);
-Route::post('/authors', [AuthorController::class, 'store_author_outside']);
-// Route::post('/authors_outside', [AuthorController::class, 'store_author_outside']);
-Route::get('/posts/create',  [PostController::class, 'create']);
-Route::get('/authors/create',  [AuthorController::class, 'create']);
-Route::get('/posts/deleteAll',  [PostController::class, 'delete_all']);
-Route::get('/authors/deleteAll',  [AuthorController::class, 'delete_all']);
-Route::get('/posts/{word}',  [PostController::class, 'show']);
-// Route::put('/posts/{post}',  [PostController::class, 'update']);
-Route::delete('/posts/{post}',  [PostController::class, 'delete']);
-Route::get('/posts/{post}/edit',  [PostController::class, 'edit']);
-Route::get('/categories/{category}', [CategoryController::class,'index']);
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::post('/words/storeFromOutside', [PostController::class, 'storeFromeOutside']);
+Route::post('/authors/storeFromOutside', [AuthorController::class, 'storeFromeOutside']);
+
+Route::controller(PostController::class)->middleware(['auth'])->group(function(){
+    Route::get('/words/index', 'index')->name('words/index');
+    Route::post('/words/store', 'store')->name('words/store');
+    Route::get('/words/create', 'create')->name('words/create');
+    Route::get('/words/deleteAll', 'deleteAll')->name('words/deleteAll');
+    Route::get('/words/{word}', 'show')->name('words/show');
+    Route::get('/words/{word}/edit', 'edit')->name('words/edit');
+});
+
+Route::controller(AuthorController::class)->middleware(['auth'])->group(function(){
+    Route::get('/authors/index', 'index')->name('authors/index');
+    Route::post('/authors/store', 'store')->name('authors/store');
+    Route::get('/authors/create', 'create')->name('authors/create');
+    Route::get('/authors/deleteAll', 'deleteAll')->name('authors/deleteAll');
+    Route::get('/authors/{author}', 'show')->name('authors/show');
+    Route::get('/authors/{author}/edit', 'edit')->name('authors/edit');
+});
+
+require __DIR__.'/auth.php';

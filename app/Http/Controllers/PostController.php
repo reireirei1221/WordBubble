@@ -59,16 +59,16 @@ class PostController extends Controller
             $existingPost->count += 1;
             $existingPost->save();
             # return redirect('/posts/' . $existingPost->id);
-            return redirect('/');
+            return redirect('/words/index');
         } else {
             // データが存在しない場合は保存する  
             $post->fill($input)->save();
             # return redirect('/posts/' . $post->id);
-            return redirect('/');
+            return redirect('/words/index');
         }
     }
 
-    public function store_word(Request $request)
+    public function storeFromeOutside(Request $request)
     {
         $name = $request->query('name');
         $post = new Post();
@@ -83,7 +83,6 @@ class PostController extends Controller
 
         if (config('services.openai.auth_key')) {
             $input['meaning'] = $this->translate_with_openai($input['name']);
-
         }
 
          // 更新または追加するデータを指定した条件で取得する
@@ -97,12 +96,12 @@ class PostController extends Controller
             // データが存在しない場合は保存する  
             $post->save();
         }
-        return redirect('/');
+        return redirect('/words/index');
     }
     
     public function edit(Post $post)
     {
-        return view('posts/edit')->with(['post' => $post]);
+        return view('posts.edit')->with(['post' => $post]);
     }
 
     // Put method
@@ -112,12 +111,11 @@ class PostController extends Controller
         // dd($post['count']);
         $post->fill($input_post)->save();
 
-        return redirect('/posts/' . $post->id);
+        return redirect('/words/' . $post->id);
     }
     
-    public function delete_all()
+    public function deleteAll()
     {
-        
         // Postモデルを使用して全てのpostデータを取得
         $posts = Post::all();
         foreach ($posts as $post) {
@@ -125,7 +123,7 @@ class PostController extends Controller
         }
 
         // 削除後の処理（例：リダイレクトなど）
-        return redirect('/');
+        return redirect('/words/index');
     }
 
     // 翻訳結果を出力する

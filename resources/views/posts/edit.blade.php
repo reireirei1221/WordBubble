@@ -5,7 +5,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Blog</title>
     </head>
-    <header>
+    <!-- <header>
         <nav>
             <ul>
             <li class="app-name">WordBubbles</li>
@@ -25,11 +25,34 @@
             </li>
             </ul>
         </nav>
-    </header>
+    </header> -->
+    <x-app-layout>
+            <x-slot name="header">
+            <nav>
+            <ul>
+            <!-- <li class="app-name">WordBubbles</li> -->
+            <li><a href="/words/index">
+                <span class="material-symbols-outlined">home</span>
+                </a>
+            </li>
+            <li>
+                <a href='/words/create'>
+                    <span class="material-symbols-outlined">add_circle</span>
+                </a>
+            </li>
+            <li>
+                <a href='/words/deleteAll'>
+                    <span class="material-symbols-outlined">delete</span>
+                </a>
+            </li>
+            <li>
+            </ul>
+        </nav>
+    </x-slot>
     <body>
         <h1 class="title">Edit</h1>
         <div class="content">
-            <form action="/posts/{{ $post->id }}" method="POST">
+            <form action="/words/{{ $post->id }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class='content__title'>
@@ -44,4 +67,5 @@
             </form>
         </div>
     </body>
+    </x-app-layout>
 </html>

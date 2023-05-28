@@ -11,7 +11,7 @@
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script src="/js/content.js"></script>
     </head>
-    <header>
+    <!-- <header>
         <nav>
             <ul>
             <li class="app-name">WordBubbles</li>
@@ -32,7 +32,30 @@
             <li>
             </ul>
         </nav>
-    </header>
+    </header> -->
+<x-app-layout>
+    <x-slot name="header">
+            <nav>
+            <ul>
+            <!-- <li class="app-name">WordBubbles</li> -->
+            <li><a href="/words/index">
+                <span class="material-symbols-outlined">home</span>
+                </a>
+            </li>
+            <li>
+                <a href='/words/create'>
+                    <span class="material-symbols-outlined">add_circle</span>
+                </a>
+            </li>
+            <li>
+                <a href='/words/deleteAll'>
+                    <span class="material-symbols-outlined">delete</span>
+                </a>
+            </li>
+            <li>
+            </ul>
+        </nav>
+    </x-slot>
     <body>
         <!-- <h1>Remember！</h1>
         <a href='/posts/create'>Add</a> -->
@@ -229,6 +252,6 @@
         </script>
         <!-- <script src="js/simulation.js"></script> -->
 </div>
-
-    </body>
+</body>
+</x-app-layout>
 </html>
