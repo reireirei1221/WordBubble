@@ -34,6 +34,7 @@ Route::get('/words/storeFromOutside', [PostController::class, 'storeFromeOutside
 Route::post('/authors/storeFromOutside', [AuthorController::class, 'storeFromeOutside']);
 
 Route::controller(PostController::class)->middleware(['auth'])->group(function(){
+    Route::get('/', 'index')->name('index');
     Route::get('/words/index', 'index')->name('words/index');
     Route::post('/words/store', 'store')->name('words/store');
     Route::get('/words/create', 'create')->name('words/create');
