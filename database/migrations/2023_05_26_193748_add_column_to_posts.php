@@ -13,16 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 50);
-            $table->string('meaning', 200)->nullable();
+        Schema::table('posts', function (Blueprint $table) {
             $table->string('definition', 200)->nullable();
             $table->string('part_of_speech', 200)->nullable();
-            // $table->foreignId('category_id')->constrained()->nullable();
-            $table->integer('count');
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -33,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::table('posts', function (Blueprint $table) {
+            //
+        });
     }
 };

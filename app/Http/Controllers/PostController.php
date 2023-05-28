@@ -11,17 +11,18 @@ class PostController extends Controller
 {
     public function index(Post $post)
     {
-        return view('posts/index')->with(['posts' => $post->getPaginateByLimit()]);
+        return view('posts.index')->with(['posts' => $post->getPaginateByLimit()]);
     }
 
-    public function show(Post $post)
+    public function show(Post $word)
     {
-        return view('posts/show')->with(['post' => $post]);
+        $post = Post::where('name', strtolower($word))->first();
+        return view('posts.show')->with(['post' => $post]);
     }
 
     public function create(Category $category)
     {
-        return view('posts/create')->with(['categories' => $category->get()]);
+        return view('posts.create')->with(['categories' => $category->get()]);
     }
 
     // public function store(Post $post, Request $request)
@@ -36,10 +37,18 @@ class PostController extends Controller
     {
         $input = $request['post'];
         // dd($input);
+        $input['name'] = strtolower($input['name']);
 
         // 認証キーが設定されている場合のみ翻訳する
         if (config('services.deepl.auth_key')) {
-            $input['meaning'] = $this->translate($input['name']);
+            $input['meaning'] = $this->translate_with_deepl($input['name']);
+        }
+
+        if (config('services.openai.auth_key')) {
+            $input['meaning'] = $this->translate_with_openai($input['name']);
+            $word_data_array = $this->get_word_data_with_openai($input['name']);
+            $input['definition'] = $word_data_array[0];
+            $input['part_of_speech'] = $word_data_array[1];
         }
 
          // 更新または追加するデータを指定した条件で取得する
@@ -59,7 +68,6 @@ class PostController extends Controller
         }
     }
 
-  
     public function store_word(Request $request)
     {
         $name = $request->query('name');
@@ -70,7 +78,12 @@ class PostController extends Controller
         
         // 認証キーが設定されている場合のみ翻訳する
         if (config('services.deepl.auth_key')) {
-            $input['meaning'] = $this->translate($input['name']);
+            $input['meaning'] = $this->translate_with_deepl($input['name']);
+        }
+
+        if (config('services.openai.auth_key')) {
+            $input['meaning'] = $this->translate_with_openai($input['name']);
+
         }
 
          // 更新または追加するデータを指定した条件で取得する
@@ -116,7 +129,7 @@ class PostController extends Controller
     }
 
     // 翻訳結果を出力する
-    public function translate(String $text)
+    public function translate_with_deepl(String $text)
     {
         $client = new Client();
 
@@ -132,5 +145,122 @@ class PostController extends Controller
 
         //return view('posts/translate')->with(['response' => $response]);
         return $response['translations'][0]['text'];
+    }
+
+    public function translate_with_openai(String $word)
+    {
+        // ChatGPTのエンドポイント
+        $apiendpoint = 'https://api.openai.com/v1/completions';
+
+        // APIキー
+        $apikey = config('services.openai.auth_key');
+
+        // HTTPクライアントのインスタンスを生成
+        $client = new Client();
+
+        try {
+            $headers = array(
+                'Content-Type: application/json',
+                'Authorization: Bearer ' . $apikey,
+            );
+            
+            $data = array(
+                'prompt' => '次の単語を和訳して: ' . $word,
+                'model' => 'text-davinci-002',
+                'max_tokens' => 50,
+            );
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $apiendpoint);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($data));
+            $response = curl_exec($ch);
+            curl_close($ch);
+
+            // // ChatGPTのAPIにリクエストを送信
+            // $response = $client->post($apiEndpoint, [
+            //     'headers' => [
+            //         'Authorization' => 'Bearer ' . $apiKey,
+            //         'Content-Type' => 'application/json',
+            //     ],
+            //     'json' => [
+            //         'prompt' => 'Translate the word: ' . $word,
+            //         'max_tokens' => 50,
+            //     ],
+            // ]);
+            // dd($response);
+            // APIレスポンスから和訳を取得
+            $translation = json_decode($response, true)['choices'][0]['text'];
+
+            // 和訳を返す
+            // return response()->json(['translation' => $translation]);
+            return $translation;
+
+        } catch (\Exception $e) {
+            // エラーが発生した場合はエラーメッセージを返す
+            // return response()->json(['error' => 'Translation request failed.']);
+            return 'Translation request failed.';
+        }
+    }
+
+    public function get_word_data_with_openai(String $word) {
+                // ChatGPTのエンドポイント
+        $apiendpoint = 'https://api.openai.com/v1/completions';
+
+        // APIキー
+        $apikey = config('services.openai.auth_key');
+
+        // HTTPクライアントのインスタンスを生成
+        $client = new Client();
+
+        try {
+            $headers = array(
+                'Content-Type: application/json',
+                'Authorization: Bearer ' . $apikey,
+            );
+            
+            $data = array(
+                'prompt' => 'Provide the definition and the part of speech of the following word in JSON format: ' . $word,
+                'model' => 'text-davinci-002',
+                'max_tokens' => 50,
+                'temperature' => 1,
+            );
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $apiendpoint);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($data));
+            $response = curl_exec($ch);
+            curl_close($ch);
+
+            // dd($response);
+
+            // // ChatGPTのAPIにリクエストを送信
+            // $response = $client->post($apiEndpoint, [
+            //     'headers' => [
+            //         'Authorization' => 'Bearer ' . $apiKey,
+            //         'Content-Type' => 'application/json',
+            //     ],
+            //     'json' => [
+            //         'prompt' => 'Translate the word: ' . $word,
+            //         'max_tokens' => 50,
+            //     ],
+            // ]);
+            // dd($response);
+            // APIレスポンスから和訳を取得
+            $definition = json_decode($response, true)['choices'][0]['definition'];
+            $part_of_speech = json_decode($response, true)['choices'][0]['part_of_speech'];
+
+            // 和訳を返す
+            // return response()->json(['translation' => $translation]);
+            return array($definition, $part_of_speech);
+
+        } catch (\Exception $e) {
+            // エラーが発生した場合はエラーメッセージを返す
+            // return response()->json(['error' => 'Translation request failed.']);
+            return 'Translation request failed.';
+        }
     }
 }

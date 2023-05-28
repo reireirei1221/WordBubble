@@ -13,6 +13,8 @@ class Post extends Model
         'name',
         'meaning',
         'count',
+        'definition',
+        'part_of_speech',
     ];
 
     public function getPaginateByLimit(int $limit_count = 20)

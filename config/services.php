@@ -35,4 +35,8 @@ return [
         'auth_key' => env('DEEPL_AUTH_KEY'),
     ],
 
+    'openai' => [
+        'auth_key' => env('OPENAI_AUTH_KEY'),
+    ],
+
 ];

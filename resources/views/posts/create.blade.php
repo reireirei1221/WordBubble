@@ -34,14 +34,24 @@
         <form action="/posts" method="POST">
             @csrf
             <div class='center'>
-                <h2>front</h2>
+                <h2>Word</h2>
                 <input type="text" name="post[name]" placeholder="単語を入力してください" value="{{ old('post.name') }}"/>
                 <p class="name__error" style="color:red">{{ $errors->first('post.name') }}</p>
             </div>
             <div class='center'>
-                <h2>Back</h2>
-                <textarea name="post[meaning]" placeholder="単語の意味を入力してください">{{ old('post.meaning') }}</textarea>
+                <h2>Translation</h2>
+                <input type="text" name="post[meaning]" placeholder="和訳を入力してください">{{ old('post.meaning') }}</input>
                 <p class="meaning__error" style="color:red">{{ $errors->first('post.meaning') }}</p>
+            </div>
+                <div class='center'>
+                <h2>Definition</h2>
+                <textarea name="post[definition]" placeholder="定義を入力してください">{{ old('post.definition') }}</textarea>
+                <p class="definition__error" style="color:red">{{ $errors->first('post.definition') }}</p>
+            </div>
+                <div class='part_of_speech'>
+                <h2>Part of speech</h2>
+                <input type="text" name="post[part_of_speech]" placeholder="品詞を入力してください">{{ old('post.part_of_speech') }}</input>
+                <p class="part_of_speech__error" style="color:red">{{ $errors->first('post.part_of_speech') }}</p>
             </div>
             <div>
                 <!-- <h2>カテゴリー</h2>

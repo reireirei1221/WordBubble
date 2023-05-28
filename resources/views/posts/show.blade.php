@@ -34,8 +34,10 @@
         <div class='center'>
             <h1>Details</h1>
             <div>
-                <p>Front：{{ $post->name }}</p>
-                <p>Back：{{ $post->meaning }}</p>
+                <p>Word：{{ $post->name }}</p>
+                <p>Translation：{{ $post->meaning }}</p>
+                <p>Definition：{{ $post->definition }}</p>
+                <p>Part of speech：{{ $post->part_of_speech }}</p>
         
             </div>
                 <!--<p class="edit">[<a href="/posts/{{ $post->id }}/edit">Edit</a>]</p>-->
