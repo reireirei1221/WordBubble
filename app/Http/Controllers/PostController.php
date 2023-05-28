@@ -11,7 +11,7 @@ class PostController extends Controller
 {
     public function index(Post $post)
     {
-        return view('posts.index')->with(['posts' => $post->getPaginateByLimit()]);
+        return view('posts.index')->with(['posts' => $post->getPaginateByLimit(), 'part_of_speech' => 'all']);
     }
 
     public function indexFilteredByPartOfSpeech(Post $post, $part_of_speech)

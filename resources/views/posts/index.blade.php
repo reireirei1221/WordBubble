@@ -100,7 +100,9 @@
                 name: post.name,
                 meaning: post.meaning,
             };
-            nodes.push(circle);
+            if ($part_of_speech == 'all' || $part_of_speech == post.part_of_speech) {
+                nodes.push(circle);
+            }
         }
         var simulation = d3.forceSimulation(nodes)
             .force('center', d3.forceCenter().x(500).y(250))
