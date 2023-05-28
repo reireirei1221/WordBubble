@@ -36,6 +36,7 @@ Route::post('/authors/storeFromOutside', [AuthorController::class, 'storeFromOut
 Route::controller(PostController::class)->middleware(['auth'])->group(function(){
     Route::get('/', 'index')->name('index');
     Route::get('/words/index', 'index')->name('words/index');
+    Route::get('/words/indexFilteredByPartOfSpeech/{part_of_speech}', 'indexFilteredByPartOfSpeech')->name('words/indexFilteredByPartOfSpeech/{part_of_speech}');
     Route::post('/words/store', 'store')->name('words/store');
     Route::get('/words/create', 'create')->name('words/create');
     Route::get('/words/deleteAll', 'deleteAll')->name('words/deleteAll');

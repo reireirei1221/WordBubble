@@ -11,7 +11,12 @@ class PostController extends Controller
 {
     public function index(Post $post)
     {
-        return view('posts.index')->with(['posts' => $post->getPaginateByLimit()]);
+        return view('posts.index')->with(['posts' => $post->getPaginateByLimit(), 'part_of_speech' => 'all']);
+    }
+
+    public function indexFilteredByPartOfSpeech(Post $post, $part_of_speech)
+    {
+        return view('posts.index')->with(['posts' => $post->getPaginateByLimit(), 'part_of_speech' => $part_of_speech]);
     }
 
     public function show(Post $word)
@@ -40,16 +45,16 @@ class PostController extends Controller
         $input['name'] = strtolower($input['name']);
 
         // 認証キーが設定されている場合のみ翻訳する
-        if (config('services.deepl.auth_key')) {
-            $input['meaning'] = $this->translate_with_deepl($input['name']);
-        }
+        // if (config('services.deepl.auth_key')) {
+        //     $input['meaning'] = $this->translate_with_deepl($input['name']);
+        // }
 
-        if (config('services.openai.auth_key')) {
-            $input['meaning'] = $this->translate_with_openai($input['name']);
-            $word_data_array = $this->get_word_data_with_openai($input['name']);
-            $input['definition'] = $word_data_array[0];
-            $input['part_of_speech'] = $word_data_array[1];
-        }
+        // if (config('services.openai.auth_key')) {
+        //     $input['meaning'] = $this->translate_with_openai($input['name']);
+        //     $word_data_array = $this->get_word_data_with_openai($input['name']);
+        //     $input['definition'] = $word_data_array[0];
+        //     $input['part_of_speech'] = $word_data_array[1];
+        // }
 
          // 更新または追加するデータを指定した条件で取得する
         $existingPost = Post::where('name', $input['name'])->first();
@@ -70,10 +75,13 @@ class PostController extends Controller
 
     public function storeFromOutside(Request $request)
     {
-        $name = $request->query('name');
+        $name = $request->query('word');
+        $part_of_speech = $request->query('partOfSpeech');
+
         $post = new Post();
         $post->name = $name;
-        $post->meaning = "";
+        $post->meaning = $part_of_speech;
+        // $post->part_of_speech = "";
         $post->count = 1;
         
         // 認証キーが設定されている場合のみ翻訳する
