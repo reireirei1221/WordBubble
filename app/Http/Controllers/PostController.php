@@ -76,7 +76,7 @@ class PostController extends Controller
         $post = new Post();
         $post->name = $name;
         $post->meaning = "";
-        $post->part_of_speech = "";
+        // $post->part_of_speech = "";
         $post->count = 1;
         
         // 認証キーが設定されている場合のみ翻訳する
