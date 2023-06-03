@@ -58,16 +58,24 @@
             @csrf
             <div class='center'>
                 <h2>Title</h2>
-                <input type="text" name="author[title]" placeholder="タイトルを入力してください" value="{{ old('author.title') }}"/>
-                <p class="name__error" style="color:red">{{ $errors->first('author.title') }}</p>
+                <input type="text" name="paper[title]" placeholder="タイトルを入力してください" value="{{ old('paper.title') }}"/>
+                <p class="name__error" style="color:red">{{ $errors->first('paper.title') }}</p>
             </div>
             <div class='center'>
                 <h2>Author</h2>
-                <input type="text" name="author[name]" placeholder="著者名を入力してください" value="{{ old('author.name') }}"/>
-                <p class="name__error" style="color:red">{{ $errors->first('author.name') }}</p>
+                <input type="text" name="paper[name]" placeholder="著者名を入力してください" value="{{ old('paper.name') }}"/>
+                <p class="name__error" style="color:red">{{ $errors->first('paper.name') }}</p>
             </div>
             <div>
-                <input type="hidden" name="author[count]" value='1'/>
+                <input type="hidden" name="paper[count]" value='1'/>
+            </div>
+            <div>
+                <h2>Rating</h2>
+                <input type="radio" name="paper[rating]" value="1" checked="checked"/>1
+                <input type="radio" name="paper[rating]" value="2"/>2
+                <input type="radio" name="paper[rating]" value="3"/>3
+                <input type="radio" name="paper[rating]" value="4"/>4
+                <input type="radio" name="paper[rating]" value="5"/>5
             </div>
             <input type="submit" value="Save"/>
         </form>
