@@ -83,7 +83,7 @@ class PostController extends Controller
 
         $post = new Post();
         $post->name = $name;
-        $post->meaning = $part_of_speech;
+        $post->part_of_speech = $part_of_speech;
         // $post->part_of_speech = "";
         $post->count = 1;
         
