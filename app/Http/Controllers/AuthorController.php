@@ -84,7 +84,7 @@ class AuthorController extends Controller
             $authors = array($first_author, $last_author);
         }
 
-        $existingPaper = Paper::where('name', $title)->first();
+        $existingPaper = Paper::where('title', $title)->first();
         if ($existingPaper) {
             return redirect('/authors/index');
         } else {
@@ -94,6 +94,8 @@ class AuthorController extends Controller
             $paper->first_author = $first_author;
             if (count($authors) == 2) {
                 $paper->last_author = $last_author;
+            } else {
+                $paper->last_author = null;
             }
             $paper->rating = $rating;
             $paper->save();
