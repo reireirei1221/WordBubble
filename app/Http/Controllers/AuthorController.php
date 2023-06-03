@@ -111,6 +111,12 @@ class AuthorController extends Controller
         foreach ($authors as $author) {
             $author->forceDelete();
         }
+
+        $titles = Title::all();
+        foreach ($titles as $title) {
+            $title->forceDelete();
+        }
+
         // 削除後の処理（例：リダイレクトなど）
         return redirect('/authors/index');
     }
