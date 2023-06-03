@@ -20,7 +20,7 @@
                 </a>
             </li>
             <li>
-                <a href='/posts/deleteAll'>
+                <a href='/posts/delete-all'>
                     <span class="material-symbols-outlined">delete</span>
                 </a>
             </li>
@@ -42,7 +42,7 @@
                 </a>
             </li>
             <li>
-                <a href='/words/deleteAll'>
+                <a href='/words/delete-all'>
                     <span class="material-symbols-outlined">delete</span>
                 </a>
             </li>
@@ -52,7 +52,6 @@
     </x-slot>
     <body>
         <div class='center'>
-        <!--<h1>チーム開発会へようこそ！</h1>-->
         <h1>Create</h1>
         <form action="/words/store" method="POST">
             @csrf
@@ -66,25 +65,24 @@
                 <input type="text" name="post[meaning]" placeholder="和訳を入力してください">{{ old('post.meaning') }}</input>
                 <p class="meaning__error" style="color:red">{{ $errors->first('post.meaning') }}</p>
             </div>
-                <div class='center'>
+            <div class='center'>
                 <h2>Definition</h2>
                 <textarea name="post[definition]" placeholder="定義を入力してください">{{ old('post.definition') }}</textarea>
                 <p class="definition__error" style="color:red">{{ $errors->first('post.definition') }}</p>
             </div>
-                <div class='part_of_speech'>
+            <div class='part_of_speech'>
                 <h2>Part of speech</h2>
-                <input type="text" name="post[part_of_speech]" placeholder="品詞を入力してください">{{ old('post.part_of_speech') }}</input>
+                <select name="post[part_of_speech]">
+                    <option value="">品詞を選択してください</option>
+                    <option value="noun">名詞</option>
+                    <option value="verb">動詞</option>
+                    <option value="adjective">形容詞</option>
+                    <option value="adverb">副詞</option>
+                    <option value="preposition">前置詞</option>
+                </select>
                 <p class="part_of_speech__error" style="color:red">{{ $errors->first('post.part_of_speech') }}</p>
             </div>
-            <div>
-                <!-- <h2>カテゴリー</h2>
-                <select name="post[category_id]">
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                </select> -->
-                <input type="hidden" name="post[count]" value='1'/>
-            </div>
+            <input type="hidden" name="post[count]" value='1'/>
             <input type="submit" value="Save"/>
         </form>
         </div>

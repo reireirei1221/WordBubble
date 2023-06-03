@@ -14,8 +14,11 @@ class PostController extends Controller
         return view('posts.index')->with(['posts' => $post->getPaginateByLimit(), 'part_of_speech' => 'all']);
     }
 
-    public function indexFilteredByPartOfSpeech(Post $post, $part_of_speech)
+    public function filter_by_part_of_speech(Post $post, $part_of_speech)
     {
+        if ($part_of_speech == 'all') {
+            return view('posts.index')->with(['posts' => $post->getPaginateByLimit(), 'part_of_speech' => 'all']);
+        }
         return view('posts.index')->with(['posts' => $post->getPaginateByLimit(), 'part_of_speech' => $part_of_speech]);
     }
 
@@ -73,14 +76,14 @@ class PostController extends Controller
         }
     }
 
-    public function storeFromOutside(Request $request)
+    public function store_from_outside(Request $request)
     {
         $name = $request->query('word');
         $part_of_speech = $request->query('partOfSpeech');
 
         $post = new Post();
         $post->name = $name;
-        $post->meaning = $part_of_speech;
+        $post->part_of_speech = $part_of_speech;
         // $post->part_of_speech = "";
         $post->count = 1;
         
@@ -122,12 +125,12 @@ class PostController extends Controller
         return redirect('/words/' . $post->id);
     }
     
-    public function deleteAll()
+    public function delete_all()
     {
         // Postモデルを使用して全てのpostデータを取得
         $posts = Post::all();
         foreach ($posts as $post) {
-            $post->delete();
+            $post->forceDelete();
         }
 
         // 削除後の処理（例：リダイレクトなど）

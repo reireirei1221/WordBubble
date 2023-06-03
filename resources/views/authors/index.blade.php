@@ -25,7 +25,7 @@
                 </a>
             </li>
             <li>
-                <a href='/authors/deleteAll'>
+                <a href='/authors/delete-all'>
                     <span class="material-symbols-outlined">delete</span>
                 </a>
             </li>
@@ -48,7 +48,7 @@
                 </a>
             </li>
             <li>
-                <a href='/authors/deleteAll'>
+                <a href='/authors/delete-all'>
                     <span class="material-symbols-outlined">delete</span>
                 </a>
             </li>
