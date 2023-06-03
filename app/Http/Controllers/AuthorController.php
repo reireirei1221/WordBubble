@@ -31,10 +31,6 @@ class AuthorController extends Controller
 
         // $title = new Title();
         // $title->name =  $title_name;
-        $paper = new Paper();
-        $paper->title = $title;
-        $paper->first_author = $author_name;
-        $paper->rating = $rating;
 
         $existingPaper = Paper::where('title', $title)->first();
     
@@ -45,6 +41,10 @@ class AuthorController extends Controller
             return redirect('/authors/index');
         } else {
             // データが存在しない場合は保存する  
+            $paper = new Paper();
+            $paper->title = $title;
+            $paper->first_author = $author_name;
+            $paper->rating = $rating;
             $paper->save();
         }
 
@@ -129,7 +129,7 @@ class AuthorController extends Controller
             $author->forceDelete();
         }
 
-        $titles = Paper::all();
+        $papers = Paper::all();
         foreach ($papers as $paper) {
             $paper->forceDelete();
         }
