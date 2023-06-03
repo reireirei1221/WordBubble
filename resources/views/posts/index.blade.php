@@ -25,7 +25,7 @@
                 </a>
             </li>
             <li>
-                <a href='/posts/deleteAll'>
+                <a href='/posts/delete-all'>
                     <span class="material-symbols-outlined">delete</span>
                 </a>
             </li>
@@ -48,14 +48,14 @@
                 </a>
             </li>
             <li>
-                <a href='/words/deleteAll'>
+                <a href='/words/delete-all'>
                     <span class="material-symbols-outlined">delete</span>
                 </a>
             </li>
             <li>
             <!-- <label for="dog-names"></label>  -->
                 <select name="part-of-speeches" id="part-of-speeches">
-                    <option value="">All</option>
+                    <option value="all">All</option>
                     <option value="noun">Noun</option> 
                     <option value="verb">Verb</option>
                     <option value="adjective">Adjective</option>
@@ -63,15 +63,16 @@
                     <option value="preposition">Preposition</option>
                 </select>
             <script>
-                // var partOfSpeeches = {!! json_encode($part_of_speech) !!};
+                // // PHPの配列データをJavaScriptの配列に変換
+                var partOfSpeeches = {!! json_encode($part_of_speech) !!};
                 // // ドロップダウンの要素を取得
                 var dropdown = document.getElementById('part-of-speeches');
 
-                // // 選択されたオプションに selected 属性を設定
-                // var selectedOption = this.querySelector('option[value="' + partOfSpeeches + '"]');
-                // if (selectedOption) {
-                //     selectedOption.setAttribute('selected', 'selected');
-                // }
+                // 選択されたオプションに selected 属性を設定
+                var selectedOption = dropdown.querySelector('option[value="' + partOfSpeeches + '"]');
+                if (selectedOption) {
+                    selectedOption.setAttribute('selected', 'selected');
+                }
 
                 // 選択イベントを監視
                 dropdown.addEventListener('change', function() {
@@ -79,12 +80,8 @@
                     // 選択されたオプションの値を取得
                     var selectedValue = this.value;
 
-                    if (selectedValue == "") {
-                        window.location.href = '/words/index';
-                    }
-
                     // 選択されたオプションに基づいてリダイレクト
-                    window.location.href = '/words/indexFilteredByPartOfSpeech/' + selectedValue;
+                    window.location.href = '/words/part-of-speech/' + selectedValue;
                 });
             </script>
             </li>
@@ -170,7 +167,7 @@
                     //circle.attr("fill", endColor);
                     var texts = d3.selectAll("text");
                     var text = texts._groups[0][e.i].innerHTML;
-                    speakWord(text, e.name);
+                    // speakWord(text, e.name);
                     texts._groups[0][e.i].innerHTML = (text === e.name) ? e.meaning : e.name;
                 })
                 .call(d3.drag().on("drag", dragCircle));
@@ -181,6 +178,8 @@
                 .append("text")
                 .attr("x", function(d) { return d.x; })
                 .attr("y", function(d) { return d.y; })
+                .append("a")
+                .attr("href", function(d) { return 'https://www.merriam-webster.com/dictionary/' + d.name; })
                 .attr("text-anchor", "middle")  // テキストの水平位置を中央揃えに設定
                 .attr("dy", ".35em")  // テキストの垂直位置を微調整
                 .text(function(d) { return d.name; })
@@ -188,6 +187,7 @@
                 .attr("font-family", "sans-serif")
                 .attr("font-weight", "bold")
                 .attr("fill", "white");
+        
             
             simulation.alphaTarget(0.3).restart();
         }
