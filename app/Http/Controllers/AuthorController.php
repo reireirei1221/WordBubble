@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Author;
-use App\Models\Title;
+// use App\Models\Title;
+use App\Models\Paper;
 use GuzzleHttp\Client;
 
 class AuthorController extends Controller
@@ -23,29 +24,37 @@ class AuthorController extends Controller
 
     public function store(Request $request)
     {
-        $input = $request['author'];
-        $title_name = $input['title'];
+        $input = $request['paper'];
+        $title = $input['title'];
         $author_name = $input['name'];
+        $rating = $input['rating'];
 
-        $title = new Title();
-        $title->name =  $title_name;
+        // $title = new Title();
+        // $title->name =  $title_name;
 
-        $existingTitle = Title::where('name', $title_name)->first();
-        if ($existingTitle) {
+        $existingPaper = Paper::where('title', $title)->first();
+    
+        if ($existingPaper) {
             // データが存在する場合はcountを1インクリメントする
+            $existingPaper->rating = $rating;
+            $existingPaper->save();
             return redirect('/authors/index');
         } else {
             // データが存在しない場合は保存する  
-            $title->save();
+            $paper = new Paper();
+            $paper->title = $title;
+            $paper->first_author = $author_name;
+            $paper->rating = $rating;
+            $paper->save();
         }
 
         $author = new Author();
         $author->name = $author_name;
-        $author->count = 1;
+        $author->count = $rating;
         $existingAuthor = Author::where('name', $author->name)->first();
         if ($existingAuthor) {
             // データが存在する場合はcountを1インクリメントする
-            $existingAuthor->count += 1;
+            $existingAuthor->count += $rating;
             $existingAuthor->save();
         } else {
             // データが存在しない場合は保存する  
@@ -62,8 +71,9 @@ class AuthorController extends Controller
         $data = $request->query('data');
         $decodedData = json_decode($data);
 
-        $title_name = $decodedData->title;
+        $title = $decodedData->title;
         $authors = $decodedData->authors;
+        $rating = $decodedData->rating;
 
         $first_author = $authors[0];
 
@@ -74,14 +84,21 @@ class AuthorController extends Controller
             $authors = array($first_author, $last_author);
         }
 
-        $existingTitle = Title::where('name', $title_name)->first();
-        if ($existingTitle) {
+        $existingPaper = Paper::where('title', $title)->first();
+        if ($existingPaper) {
             return redirect('/authors/index');
         } else {
             // データが存在しない場合は保存する  
-            $title = new Title();
-            $title->name = $title_name;
-            $title->save();
+            $paper = new Paper();
+            $paper->title = $title;
+            $paper->first_author = $first_author;
+            if (count($authors) == 2) {
+                $paper->last_author = $last_author;
+            } else {
+                $paper->last_author = null;
+            }
+            $paper->rating = $rating;
+            $paper->save();
         }
 
         for ($i = 0; $i < count($authors); $i++) {
@@ -90,13 +107,13 @@ class AuthorController extends Controller
             $existingAuthor = Author::where('name', $author_name)->first();
             if ($existingAuthor) {
                 // データが存在する場合はcountを1インクリメントする
-                $existingAuthor->count += 1;
+                $existingAuthor->count += $rating;
                 $existingAuthor->save();
             } else {
                 // データが存在しない場合は保存する  
                 $author = new Author();
                 $author->name = $author_name;
-                $author->count = 1;
+                $author->count = $rating;
                 $author->save();
             }
         }
@@ -112,9 +129,9 @@ class AuthorController extends Controller
             $author->forceDelete();
         }
 
-        $titles = Title::all();
-        foreach ($titles as $title) {
-            $title->forceDelete();
+        $papers = Paper::all();
+        foreach ($papers as $paper) {
+            $paper->forceDelete();
         }
 
         // 削除後の処理（例：リダイレクトなど）

@@ -77,7 +77,7 @@
             var circle = {
                 x: Math.random() * 2000,
                 y: Math.random() * 1000,
-                r: author.count * 50,
+                r: author.count * 20,
                 i: i,
                 name: author.name,
             };
@@ -121,10 +121,12 @@
                 .append("text")
                 .attr("x", function(d) { return d.x; })
                 .attr("y", function(d) { return d.y; })
+                .append("a")
+                .attr("href", function(d) { return 'https://dl.acm.org/action/doSearch?AllField=' + encodeURIComponent(d.name); })
                 .attr("text-anchor", "middle")  // テキストの水平位置を中央揃えに設定
                 .attr("dy", ".35em")  // テキストの垂直位置を微調整
                 .text(function(d) { return d.name; })
-                .attr("font-size", function(d) { return d.r / 5; })
+                .attr("font-size", function(d) { return d.r / 7; })
                 .attr("font-family", "sans-serif")
                 .attr("font-weight", "bold")
                 .attr("fill", "white");
