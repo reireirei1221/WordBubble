@@ -5,6 +5,7 @@ WordBubblesは、Webページ上で得た情報を、隙間時間に復習する
 大きく以下の二つの機能があります。
 ### Webページ上の英単語をダブルクリックする回数に応じて、その単語を大きく表示する機能
 ダブルクリックした単語はChrome拡張機能によって取得しています。Webページ上の英単語をダブルクリックすると意味を表示してくれる、Google Dictionaryの拡張機能と併用することを想定しており、複数回意味を確認する単語は出現頻度が高いのにも関わらず、定着していないので優先的に暗記する必要があると判断し、大きく可視化しています。
+
 **使用方法**
 1. 本アプリ用のChrome拡張機能 (https://github.com/reireirei1221/WordBubbles_Extension_word.git) をダウンロードし、拡張機能を追加します。
 2. 英単語が含まれる任意のWebページを開きます。
@@ -13,6 +14,7 @@ WordBubblesは、Webページ上で得た情報を、隙間時間に復習する
 5. アプリのサイト (https://wordbubbles.herokuapp.com/words/index) を開きます。
 6. ダブルクリックした単語が、その回数に応じて大きく表示されます。
 ### ACM Library内の論文を5段階で評価し、今まで読んだ論文の中で、自分の中の評価が高い著者大きく表示する機能
+
 **使用方法**
 1. 本アプリ用のChrome拡張機能 (https://github.com/reireirei1221/WordBubble_Extension_author.git) をダウンロードし、拡張機能を追加します。
 2. ACM Library内の論文を一つ開きます。 (ex. https://dl.acm.org/doi/10.1145/3526114.3558708)
