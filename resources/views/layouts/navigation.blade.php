@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('words/index')" :active="request()->routeIs('words/index')">
                         {{ __('Words') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('papers/index')" :active="request()->routeIs('papers/index')">
+                        {{ __('Papers') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('authors/index')" :active="request()->routeIs('authors/index')">
                         {{ __('Authors') }}
                     </x-nav-link>

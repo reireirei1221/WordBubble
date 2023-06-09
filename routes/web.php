@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\PaperController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/words/store-from-outside', [PostController::class, 'store_from_outside']);
-Route::get('/authors/store-from-outside', [AuthorController::class, 'store_from_outside']);
+Route::get('/papers/store-from-outside', [PaperController::class, 'store_from_outside']);
 
 Route::controller(PostController::class)->middleware(['auth'])->group(function(){
     Route::get('/', 'index')->name('index');
@@ -51,6 +52,15 @@ Route::controller(AuthorController::class)->middleware(['auth'])->group(function
     Route::get('/authors/delete-all', 'delete_all')->name('authors/delete-all');
     Route::get('/authors/{author}', 'show')->name('authors/show');
     Route::get('/authors/{author}/edit', 'edit')->name('authors/edit');
+});
+
+Route::controller(PaperController::class)->middleware(['auth'])->group(function(){
+    Route::get('/papers/index', 'index')->name('papers/index');
+    Route::post('/papers/store', 'store')->name('papers/store');
+    Route::get('/papers/create', 'create')->name('papers/create');
+    Route::get('/papers/delete-all', 'delete_all')->name('papers/delete-all');
+    Route::get('/papers/{paper}', 'show')->name('papers/show');
+    Route::get('/papers/{paper}/edit', 'edit')->name('papers/edit');
 });
 
 require __DIR__.'/auth.php';
