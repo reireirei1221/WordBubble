@@ -28,3 +28,6 @@ ACM Library内の論文に対する自分の興味を5段階で評価すると�
 ## 必要な環境
 - インターネット接続環境
 - 対応するウェブブラウザ (Google Chrome)
+
+## デモ
+<video src="https://github.com/reireirei1221/WordBubble/assets/72299684/9e28f2ca-85a6-43fc-a454-fba99a4cd105" width="300">
