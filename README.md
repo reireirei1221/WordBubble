@@ -1,5 +1,5 @@
 # WordBubbles
-※ デプロイ済みですが、Database使用の無料期間が終了したため、[アプリのサイト](https://wordbubbles.herokuapp.com/words/index)を開くとエラーが表示されるようになっています。
+※ デプロイ済みですが、Database使用の無料期間が終了したため、[アプリのサイト](https://wordbubbles.herokuapp.com/words/index)を開くとエラーが表示されます。
 ## 概要
 WordBubblesは、Webページ上で学習した英単語を保存し、別のWebページ上で可視化するアプリです。 
 Webページ上の英単語をダブルクリックするとポップアップで意味を表示してくれる[Google Dictionaryの拡張機能](https://chromewebstore.google.com/detail/google-dictionary-by-goog/mgijmajocgfcbeboacabfgobmjgjcoja?hl=en)と併用することを想定しており、ダブルクリックされた英単語をサーバに送信し、[別のWebページ](https://wordbubbles.herokuapp.com/words/index)上で、それらの単語をバブル状に可視化します。  
