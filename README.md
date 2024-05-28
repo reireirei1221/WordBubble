@@ -2,7 +2,7 @@
 
 ## 概要
 WordBubblesは、Webページ上で学習した英単語を保存し、別のWebページ上で可視化するアプリです。
-Webページ上の英単語をダブルクリックするとポップアップで意味を表示する[Google Dictionaryの拡張機能](https://chromewebstore.google.com/detail/google-dictionary-by-goog/mgijmajocgfcbeboacabfgobmjgjcoja?hl=en) と併用することを想定しており、ダブルクリックされた英単語をサーバに送信し、[別のWebページ](https://wordbubbles.herokuapp.com/words/index)上で、それらの単語をバブル状に可視化します。
+Webページ上の英単語をダブルクリックするとポップアップで意味を表示してくれる[Google Dictionaryの拡張機能](https://chromewebstore.google.com/detail/google-dictionary-by-goog/mgijmajocgfcbeboacabfgobmjgjcoja?hl=en)と併用することを想定しており、ダブルクリックされた英単語をサーバに送信し、[別のWebページ](https://wordbubbles.herokuapp.com/words/index)上で、それらの単語をバブル状に可視化します。
 複数回ダブルクリックされた英単語は、出現頻度が高いのにも関わらず、定着していない可能性があり、優先的に暗記する必要があると考えられるので、大きく可視化しています。
 
 **使用方法**
